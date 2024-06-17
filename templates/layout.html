@@ -1,0 +1,123 @@
+{% load static %} {% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %} Chai Tweet {% endblock %}</title>
+    {% tailwind_css %}
+  </head>
+  <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-white dark:bg-gray-800 text-black dark:text-white p-4">
+      <div class="container mx-auto flex justify-between items-center">
+        <!-- Logo -->
+        <div class="text-xl font-bold">
+          <a href="#">Chai Tweet</a>
+        </div>
+        <!-- Links -->
+        <div class="hidden md:flex space-x-6">
+          <a
+            href="{% url 'tweet_list' %}"
+            class="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700"
+            >Tweet Home</a
+          >
+
+          {% if user.is_authenticated %}
+          <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button
+              type="submit"
+              class="block w-full text-left px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded mt-2"
+            >
+              Logout
+            </button>
+          </form>
+          {% else %}
+          <a
+            href="{% url 'register' %}"
+            class="block px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded mt-2"
+            >Register</a
+          >
+          <a
+            href="{% url 'login' %}"
+            class="block px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded mt-2"
+            >Login</a
+          >
+          {% endif %}
+        </div>
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+          <button id="mobile-menu-button" class="focus:outline-none">
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="hidden md:hidden">
+        <a
+          href="{% url 'tweet_list' %}"
+          class="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700"
+          >Tweet Home</a
+        >
+
+        {% if user.is_authenticated %}
+        <form action="{% url 'tweet_list' %}" method="post">
+          {% csrf_token %}
+          <button
+            type="submit"
+            class="block w-full text-left px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded mt-2"
+          >
+            Logout
+          </button>
+        </form>
+        {% else %}
+        <a
+          href="{% url 'register' %}"
+          class="block px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded mt-2"
+          >Register</a
+        >
+        <a
+          href="{% url 'login' %}"
+          class="block px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded mt-2"
+          >Login</a
+        >
+        {% endif %}
+      </div>
+    </nav>
+
+    <div class="container mx-auto mt-8">
+      {% block content %} {% endblock content %}
+    </div>
+
+    <script>
+      // Mobile menu toggle
+      document.getElementById("mobile-menu-button").onclick = function () {
+        var menu = document.getElementById("mobile-menu");
+        if (menu.classList.contains("hidden")) {
+          menu.classList.remove("hidden");
+        } else {
+          menu.classList.add("hidden");
+        }
+      };
+
+      // Toggle dark mode
+      function toggleDarkMode() {
+        document.documentElement.classList.toggle("dark");
+      }
+    </script>
+  </body>
+</html>
