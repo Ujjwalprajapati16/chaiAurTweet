@@ -1,5 +1,5 @@
 from django import forms
-from .models import Tweet
+from .models import Tweet, Comment
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -9,7 +9,7 @@ class TweetForm(forms.ModelForm):
         fields = ['text', 'photo']
         widgets = {
             'text': forms.Textarea(attrs={
-                'class': 'bg-black text-black p-2 rounded',
+                'class': 'bg-black text- p-2 rounded',
                 'placeholder': 'What\'s happening?',
                 'rows': 4,
             }),
@@ -37,7 +37,12 @@ class UserRegistrationForm(UserCreationForm):
         fields = ('username', 'email', 'password1', 'password2')
         widgets = {
             'username': forms.TextInput(attrs={
-                'class': 'bg-white dark:bg-gray-800 text-black dark:text-white p-2 rounded',
+                'class': 'bg-black dark:bg-gray-800 text-black dark:text-white p-2 rounded',
                 'placeholder': 'Username',
             }),
         }
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']

@@ -4,22 +4,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>{% block title %} Chai Tweet {% endblock %}</title>
     {% tailwind_css %}
   </head>
   <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
     <!-- Navbar -->
-    <nav class="bg-white dark:bg-gray-800 text-black dark:text-white p-4">
+    <nav class="navbar bg-base-100  dark:bg-gray-800 text-black dark:text-white p-4">
       <div class="container mx-auto flex justify-between items-center">
         <!-- Logo -->
         <div class="text-xl font-bold">
-          <a href="#">Chai Tweet</a>
+          <a href="tweets/"><i class="fa-solid fa-blog"></i></a>
         </div>
         <!-- Links -->
+        <div class="form-control">
+          <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
+        </div>
         <div class="hidden md:flex space-x-6">
           <a
             href="{% url 'tweet_list' %}"
-            class="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700"
+            class="btn btn-outline btn-info"
             >Tweet Home</a
           >
 
@@ -28,7 +32,7 @@
             {% csrf_token %}
             <button
               type="submit"
-              class="block w-full text-left px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded mt-2"
+              class="btn btn-error"
             >
               Logout
             </button>
@@ -70,7 +74,7 @@
       <div id="mobile-menu" class="hidden md:hidden">
         <a
           href="{% url 'tweet_list' %}"
-          class="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700"
+          class="btn btn-outline btn-info"
           >Tweet Home</a
         >
 
@@ -79,7 +83,7 @@
           {% csrf_token %}
           <button
             type="submit"
-            class="block w-full text-left px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded mt-2"
+            class="btn btn-outline btn-error"
           >
             Logout
           </button>

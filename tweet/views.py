@@ -1,7 +1,9 @@
+from pyexpat.errors import messages
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse
 from .models import Tweet
-from .forms import TweetForm, UserRegistrationForm
+from .forms import CommentForm, TweetForm, UserRegistrationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 
@@ -62,3 +64,26 @@ def register(request):
     else:
         form = UserRegistrationForm()
     return render(request, 'registration/register.html', {'form': form})
+
+@login_required
+def like_tweet(request, tweet_id):
+    tweet = get_object_or_404(Tweet, id=tweet_id)
+    if tweet.likes.filter(id=request.user.id).exists():
+        tweet.likes.remove(request.user)
+    else:
+        tweet.likes.add(request.user)
+    return redirect(reverse('tweet_list'))
+
+@login_required
+def add_comment(request, tweet_id):
+    tweet = get_object_or_404(Tweet, id=tweet_id)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.tweet = tweet
+            comment.save()
+            return redirect('tweet_list')
+        
+    return redirect(reverse('tweet_list'))
