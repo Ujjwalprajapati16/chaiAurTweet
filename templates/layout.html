@@ -17,9 +17,10 @@
           <a href="tweets/"><i class="fa-solid fa-blog"></i></a>
         </div>
         <!-- Links -->
-        <div class="form-control">
-          <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
-        </div>
+        <form method="GET" action="{% url 'tweet_search' %}" class="flex items-center">
+          <input type="text" name="q" placeholder="Search tweets..." class="w-full p-2 rounded bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-300">
+          <button type="submit" class="btn btn-info ml-2"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </form>
         <div class="hidden md:flex space-x-6">
           <a
             href="{% url 'tweet_list' %}"

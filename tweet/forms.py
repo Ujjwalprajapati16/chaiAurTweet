@@ -9,7 +9,7 @@ class TweetForm(forms.ModelForm):
         fields = ['text', 'photo']
         widgets = {
             'text': forms.Textarea(attrs={
-                'class': 'bg-black text- p-2 rounded',
+                'class': 'bg-black text-black p-2 rounded',
                 'placeholder': 'What\'s happening?',
                 'rows': 4,
             }),

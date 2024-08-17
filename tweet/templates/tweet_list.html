@@ -24,7 +24,9 @@
                         {% if tweet.user == user %}
                             <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-outline btn-warning">Edit</a>
                         {% endif %}
-                        <button onclick="toggleComments({{ tweet.id }})" class="btn btn-outline btn-info"><i class="fa-sharp fa-regular fa-comment"></i></button>
+                        <button onclick="toggleComments({{ tweet.id }})" class="btn btn-outline btn-info">
+                            <i class="fa-sharp fa-regular fa-comment"></i> Comments
+                        </button>
                         {% if tweet.user == user %}
                             <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-outline btn-error">Delete</a>
                         {% endif %}
@@ -35,8 +37,15 @@
                         <h6 class="text-lg font-semibold mb-2 dark:text-gray-200">Comments</h6>
                         <div class="space-y-4">
                             {% for comment in tweet.comments.all %}
-                                <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg">
-                                    <p class="text-gray-900 dark:text-gray-300"><span class="font-semibold">{{ comment.user.username }}:</span> {{ comment.content }}</p>
+                                <div class="flex items-start space-x-3">
+                                    <div class="flex-shrink-0">
+                                        <img src="{{ comment.user.profile_picture.url }}" alt="" class="h-8 w-8 rounded-full">
+                                    </div>
+                                    <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg w-full">
+                                        <p class="text-gray-900 dark:text-gray-300">
+                                            <span class="font-semibold">{{ comment.user.username }}:</span> {{ comment.content }}
+                                        </p>
+                                    </div>
                                 </div>
                             {% endfor %}
                         </div>
@@ -47,13 +56,71 @@
                                 <button type="submit" class="btn btn-outline btn-success mt-2">Submit</button>
                             </form>
                         {% else %}
-                            <p class="text-gray-900 dark:text-gray-300 mt-2">Please <a href="{% url 'login' %}" class="text-blue-500">login</a> to write a comment.</p>
+                            <p class="text-gray-900 dark:text-gray-300 mt-2">
+                                Please <a href="{% url 'login' %}" class="text-blue-500">login</a> to write a comment.
+                            </p>
                         {% endif %}
                     </div>
                 </div>
             </div>
         {% endfor %}
     </div>
+<!-- Footer -->
+<div class="w-full bg-gray-800 text-white py-6 mt-12">
+    <footer class="max-w-screen-xl mx-auto px-4">
+        <div class="grid gap-6 grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
+            <!-- About Section -->
+            <div class="mb-6 md:mb-0">
+                <h6 class="text-xl font-semibold mb-4">About Chai Tweet</h6>
+                <p class="text-gray-400">Chai Tweet is a platform where you can share your thoughts, images, and engage with a community of like-minded individuals. Enjoy the freedom to express yourself.</p>
+            </div>
+
+            <!-- Links Section -->
+            <div class="mb-6 md:mb-0">
+                <h6 class="text-xl font-semibold mb-4">Quick Links</h6>
+                <ul>
+                    <li class="mb-2"><a href="{% url 'tweet_list' %}" class="text-gray-400 hover:text-white transition">Home</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white transition">About</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                </ul>
+            </div>
+
+            <!-- Social Media Section -->
+            <div class="mb-6 md:mb-0">
+                <h6 class="text-xl font-semibold mb-4">Follow Us</h6>
+                <div class="flex space-x-4">
+                    <a href="https://twitter.com" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://facebook.com" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="https://instagram.com" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://github.com" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Subscribe Section -->
+            <div class="mb-6 md:mb-0">
+                <h6 class="text-xl font-semibold mb-4">Subscribe</h6>
+                <form action="#" method="POST">
+                    <input type="email" class="w-full p-2 mb-4 text-gray-900 rounded" placeholder="Enter your email">
+                    <button class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded transition">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="text-center text-gray-500 mt-6">
+            &copy; 2024 Chai Tweet. All rights reserved.
+        </div>
+    </footer>
+</div>
+<!-- End of Footer -->
+
 
     <script>
         function toggleComments(tweetId) {
